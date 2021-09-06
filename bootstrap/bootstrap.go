@@ -4,16 +4,16 @@ import (
 	"fiber-bbs/config"
 	"fiber-bbs/database"
 	"fiber-bbs/routes"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
 	"gorm.io/gorm"
-	"time"
 )
 
-func SetupRoute(app *fiber.App)  {
+func SetupRoute(app *fiber.App) {
 	routes.RegisterWebRoutes(app)
 }
-
 
 // SetupDB 初始化数据库和ORM
 func SetupDB() {

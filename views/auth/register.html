@@ -11,8 +11,8 @@
             <div class="form-group row">
               <label for="name" class="col-md-4 col-form-label text-md-right">用户名</label>
               <div class="col-md-6">
-                <input id="name" type="text" class="form-control {{if .errors.name }}is-invalid {{end}}" name="name" value="{{.user.Name}}" required autofocus>
-                {{ with .errors.name }}
+                <input id="name" type="text" class="form-control {{if .Errors.name }}is-invalid {{end}}" name="name" value="{{.User.Name}}"  autofocus>
+                {{ with .Errors.name }}
                 <div class="invalid-feedback">
                   {{ range $message := . }}
                   <p>{{ $message }}</p>
@@ -26,9 +26,9 @@
               <label for="email" class="col-md-4 col-form-label text-md-right"> 邮箱地址</label>
 
               <div class="col-md-6">
-                <input id="email" type="email" class="form-control {{if .errors.email }}is-invalid {{end}}" name="email" value="{{.user.Email}}" required>
+                <input id="email" type="email" class="form-control {{if .Errors.email }}is-invalid {{end}}" name="email" value="{{.User.Email}}" >
 
-                {{ with .errors.email }}
+                {{ with .Errors.email }}
                 <div class="invalid-feedback">
                   {{ range $message := . }}
                   <p>{{ $message }}</p>
@@ -42,8 +42,8 @@
               <label for="password" class="col-md-4 col-form-label text-md-right">密码</label>
 
               <div class="col-md-6">
-                <input id="password" type="password" class="form-control {{if .errors.password }}is-invalid {{end}}" name="password" required>
-                {{ with .errors.password }}
+                <input id="password" type="password" class="form-control {{if .Errors.password }}is-invalid {{end}}" name="password" >
+                {{ with .Errors.password }}
                 <div class="invalid-feedback">
                   {{ range $message := . }}
                   <p>{{ $message }}</p>
@@ -58,8 +58,8 @@
               <label for="password-confirm" class="col-md-4 col-form-label text-md-right">确认密码</label>
 
               <div class="col-md-6">
-                <input id="password-confirm" type="password" class="form-control {{if .errors.password_confirmation }}is-invalid {{end}}" name="password_confirmation" required>
-                {{ with .errors.password_confirmation }}
+                <input id="password-confirm" type="password" class="form-control {{if .Errors.password_confirm }}is-invalid {{end}}" name="password_confirm" >
+                {{ with .Errors.password_confirm }}
                 <div class="invalid-feedback">
                   {{ range $message := . }}
                   <p>{{ $message }}</p>
@@ -72,9 +72,9 @@
             <div class="form-group row">
               <label for="captcha" class="col-md-4 col-form-label text-md-right">验证码</label>
 
-              <div class="col-md-4">
-                <input id="captcha" class="form-control {{if .errors.captcha }}is-invalid {{end}}" name="captcha" value="{{.user.Captcha}}" required>
-                {{ with .errors.captcha }}
+              <div class="col-md-6" style="position: relative;">
+                <input id="captcha" class="form-control {{if .Errors.captcha }}is-invalid {{end}}" name="captcha" value="" >
+                {{ with .Errors.captcha }}
                 <div class="invalid-feedback">
                   {{ range $message := . }}
                   <p>{{ $message }}</p>
@@ -82,12 +82,13 @@
                 </div>
                 {{ end }}
 
-
-              </div>
-              <img class="thumbnail captcha" src="{{.captcha}}" onclick="this.src='/captcha?'+Math.random()"
+                <img class="thumbnail captcha" style="position: absolute;right: 45px;top: 5px;" src="/captcha" onclick="this.src='/captcha?'+Math.random()"
                 title="点击图片重新获取验证码">
+              </div>
+          
 
             </div>
+    
 
             <div class="form-group row mb-0">
               <div class="col-md-6 offset-md-4">

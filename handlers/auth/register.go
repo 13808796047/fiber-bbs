@@ -1,18 +1,32 @@
 package auth
 
 import (
+	"fiber-bbs/models"
+	"fiber-bbs/requests"
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 )
 
-type RegisterHandler struct {}
+type RegisterHandler struct{}
 
-func (r *RegisterHandler)ShowRegistrationForm(c *fiber.Ctx) error {
-
-
-	return c.Render("auth/register",fiber.Map{
+func (r *RegisterHandler) ShowRegistrationForm(c *fiber.Ctx) error {
+	return c.Render("auth/register", fiber.Map{
 		"Title": "注册",
 	})
 }
 func (r RegisterHandler) Register(c *fiber.Ctx) error {
+	user := models.User{}
+	if err := c.BodyParser(&user); err != nil {
+		fmt.Println(err)
+	}
+	errors := requests.ValidateRegistrationForm(&user, c)
+	if len(errors) > 0 {
+		return c.Render("auth/register", fiber.Map{
+			"Title":  "注册",
+			"Errors": errors,
+			"User":   &user,
+		})
+	}
 	return c.Redirect("/")
 }
