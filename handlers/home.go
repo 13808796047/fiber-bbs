@@ -1,15 +1,16 @@
 package handlers
 
 import (
+	"fiber-bbs/pkgs/auth"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 type HomeHandler struct {
-	*Base
 }
 
 func (h *HomeHandler) Index(c *fiber.Ctx) error {
-	user := h.User(c)
+	user := auth.User(c)
 
 	return c.Render("index", fiber.Map{
 		"Title": "首页",
