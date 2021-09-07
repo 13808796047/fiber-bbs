@@ -28,5 +28,6 @@ func (r RegisterHandler) Register(c *fiber.Ctx) error {
 			"User":   &user,
 		})
 	}
+	user.Create()
 	return c.Redirect("/")
 }

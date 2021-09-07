@@ -3,23 +3,20 @@ package routes
 import (
 	"fiber-bbs/handlers"
 	"fiber-bbs/handlers/auth"
-	"image/color"
-
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
+	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
 	"github.com/steambap/captcha"
+	"image/color"
 )
 
 func RegisterWebRoutes(app *fiber.App) {
+	app.Use(encryptcookie.New(encryptcookie.Config{
+		Key: encryptcookie.GenerateKey(),
+	}))
 	home := &handlers.HomeHandler{}
 	app.Get("/", home.Index)
-	app.Get("/captcha", func(c *fiber.Ctx) error {
 
-		store := session.New()
-		sess, err := store.Get(c)
-		if err != nil {
-			panic(err)
-		}
+	app.Get("/captcha", func(c *fiber.Ctx) error {
 
 		data, _ := captcha.New(100, 30, func(options *captcha.Options) {
 			options.CharPreset = "1234567890"
@@ -28,10 +25,10 @@ func RegisterWebRoutes(app *fiber.App) {
 			options.Palette = color.Palette{}
 		})
 
-		sess.Set("captcha", data.Text)
-		if err := sess.Save(); err != nil {
-			panic(err)
-		}
+		c.Cookie(&fiber.Cookie{
+			Name:  "captcha",
+			Value: data.Text,
+		})
 		return data.WriteImage(c.Response().BodyWriter())
 	})
 	register := &auth.RegisterHandler{}

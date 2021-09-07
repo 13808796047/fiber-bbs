@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"fiber-bbs/config"
 	"fiber-bbs/database"
+	"fiber-bbs/models"
 	"fiber-bbs/routes"
 	"time"
 
@@ -33,5 +34,5 @@ func SetupDB() {
 func migration(db *gorm.DB) {
 
 	// 自动迁移
-	db.AutoMigrate()
+	db.AutoMigrate(&models.User{})
 }

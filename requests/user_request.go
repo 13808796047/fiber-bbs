@@ -2,9 +2,7 @@ package requests
 
 import (
 	"fiber-bbs/models"
-
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/thedevsaddam/govalidator"
 )
 
@@ -48,20 +46,13 @@ func ValidateRegistrationForm(data *models.User, c *fiber.Ctx) map[string][]stri
 		TagIdentifier: "valid", // 模型中的 Struct 标签标识符
 		Messages:      messages,
 	}
-
 	// 4. 开始验证
 	errs := govalidator.New(opts).ValidateStruct()
-
 	// 5. 因 govalidator 不支持 password_confirm 验证，我们自己写一个
 	if data.Password != data.PasswordConfirm {
 		errs["password_confirm"] = append(errs["password_confirm"], "两次输入密码不匹配！")
 	}
-	store := session.New()
-	sess, err := store.Get(c)
-	if err != nil {
-		panic(err)
-	}
-	if data.Capatcha != sess.Get("captcha") {
+	if data.Capatcha != c.Cookies("captcha") {
 		errs["captcha"] = append(errs["captcha"], "验证码错误！")
 	}
 
