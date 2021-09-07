@@ -3,10 +3,11 @@ package routes
 import (
 	"fiber-bbs/handlers"
 	"fiber-bbs/handlers/auth"
+	"image/color"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
 	"github.com/steambap/captcha"
-	"image/color"
 )
 
 func RegisterWebRoutes(app *fiber.App) {
@@ -39,4 +40,6 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Get("/login", login.ShowLoginForm)
 	app.Post("/login", login.Login)
 	app.Post("/logout", login.Logout)
+	topic := &handlers.TopicHandler{}
+	app.Get("/topics", topic.Index)
 }
