@@ -9,8 +9,8 @@
 
         <div class="form-group">
           <label for="email">邮箱：</label>
-          <input type="text" name="email" class="form-control {{if .errors }}is-invalid {{end}}" value="{{ .email }}">
-          {{ with .errors }}
+          <input type="text" name="email" class="form-control {{if .Errors }}is-invalid {{end}}" value="{{ .Email }}">
+          {{ with .Errors }}
           <div class="invalid-feedback">
 
             <p>{{ . }}</p>
@@ -21,7 +21,7 @@
 
         <div class="form-group">
           <label for="password">密码：</label>
-          <input type="password" name="password" class="form-control" value="{{.password }}">
+          <input type="password" name="password" class="form-control" value="{{.Password }}">
         </div>
 
         <button type="submit" class="btn btn-primary">登录</button>

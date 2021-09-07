@@ -16,42 +16,44 @@
       </ul>
       <ul class="navbar-nav justify-content-end">
 
-<!--        <li class="nav-item"><a class="nav-link" href="#">用户列表</a></li>-->
-<!--        <li class="nav-item dropdown">-->
-<!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--            <img src="" class="img-responsive img-circle" width="30px" height="30px">-->
-<!--           -->
-<!--          </a>-->
-<!--          <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
-<!--            <a class="dropdown-item" href="/users/show?id={{$.Session.SessionKeyUser.id}}">个人中心</a>-->
-<!--            <a class="dropdown-item" href="/users/edit?id={{$.Session.SessionKeyUser.id}}">编辑资料</a>-->
-<!--            <div class="dropdown-divider"></div>-->
-<!--            <a class="dropdown-item" id="logout" href="#">-->
-<!--              <form action="/logout" method="POST">-->
+          {{with $.User.Name}}
+          {{.}}
+        <li class="nav-item"><a class="nav-link" href="#">用户列表</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="" class="img-responsive img-circle" width="30px" height="30px">
 
-<!--                <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>-->
-<!--              </form>-->
-<!--            </a>-->
-<!--          </div>-->
-<!--        </li>-->
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/users/show?id={{$.Session.SessionKeyUser.id}}">个人中心</a>
+            <a class="dropdown-item" href="/users/edit?id={{$.Session.SessionKeyUser.id}}">编辑资料</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" id="logout" href="#">
+              <form action="/logout" method="POST">
 
+                <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
+              </form>
+            </a>
+          </div>
+        </li>
+          {{else}}
         <li class="nav-item"><a class="nav-link" href="/help">帮助</a></li>
         <li class="nav-item" ><a class="nav-link" href="/login">登录</a></li>
-
+          {{end}}
       </ul>
-      <!-- Right Side Of Navbar -->
-      <!--            <ul class="navbar-nav navbar-right">-->
-      <!--                &lt;!&ndash; Authentication Links &ndash;&gt;-->
-      <!--                {{if $.Session.SessionKeyUser.id}}-->
-      <!--                    {{$.Session.SessionKeyUser.name}}-->
-      <!--                <form action="/logout" method="POST" onsubmit="return confirm('您确定要退出吗？');">-->
-      <!--                <button class="btn btn-block btn-outline-danger btn-sm" type="submit" name="button">退出</button>-->
-      <!--                </form>-->
-      <!--                {{else}}-->
-      <!--                <li class="nav-item"><a class="nav-link" href="/login">登录</a></li>-->
-      <!--                <li class="nav-item"><a class="nav-link" href="/register">注册</a></li>-->
-      <!--                {{end}}-->
-      <!--            </ul>-->
+<!--&lt;!&ndash;       Right Side Of Navbar&ndash;&gt;-->
+<!--                  <ul class="navbar-nav navbar-right">-->
+<!--                      &lt;!&ndash; Authentication Links &ndash;&gt;-->
+<!--                      {{if .User}}-->
+<!--                          {{.User.Name}}-->
+<!--                      <form action="/logout" method="POST" onsubmit="return confirm('您确定要退出吗？');">-->
+<!--                      <button class="btn btn-block btn-outline-danger btn-sm" type="submit" name="button">退出</button>-->
+<!--                      </form>-->
+<!--                      {{else}}-->
+<!--                      <li class="nav-item"><a class="nav-link" href="/login">登录</a></li>-->
+<!--                      <li class="nav-item"><a class="nav-link" href="/register">注册</a></li>-->
+<!--                      {{end}}-->
+<!--                  </ul>-->
     </div>
   </div>
 </nav>

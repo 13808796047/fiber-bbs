@@ -1,13 +1,13 @@
 package requests
 
 import (
-	"fiber-bbs/models"
+	"fiber-bbs/models/user"
 	"github.com/gofiber/fiber/v2"
 	"github.com/thedevsaddam/govalidator"
 )
 
 // ValidateRegistrationForm 验证表单，返回 errs 长度等于零即通过
-func ValidateRegistrationForm(data *models.User, c *fiber.Ctx) map[string][]string {
+func ValidateRegistrationForm(data *user.User, c *fiber.Ctx) map[string][]string {
 
 	// 1. 定制认证规则
 	rules := govalidator.MapData{

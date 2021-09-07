@@ -13,6 +13,7 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Use(encryptcookie.New(encryptcookie.Config{
 		Key: encryptcookie.GenerateKey(),
 	}))
+	//app.Use(middlewares.StartSession())
 	home := &handlers.HomeHandler{}
 	app.Get("/", home.Index)
 
@@ -37,4 +38,5 @@ func RegisterWebRoutes(app *fiber.App) {
 	login := &auth.LoginHandler{}
 	app.Get("/login", login.ShowLoginForm)
 	app.Post("/login", login.Login)
+	app.Post("/logout", login.Logout)
 }

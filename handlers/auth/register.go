@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"fiber-bbs/models"
+	"fiber-bbs/models/user"
 	"fiber-bbs/requests"
 	"fmt"
 
@@ -16,7 +16,7 @@ func (r *RegisterHandler) ShowRegistrationForm(c *fiber.Ctx) error {
 	})
 }
 func (r RegisterHandler) Register(c *fiber.Ctx) error {
-	user := models.User{}
+	user := user.User{}
 	if err := c.BodyParser(&user); err != nil {
 		fmt.Println(err)
 	}
