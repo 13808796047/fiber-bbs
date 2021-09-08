@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"fiber-bbs/config"
 	"fiber-bbs/database"
+	"fiber-bbs/models/category"
 	"fiber-bbs/models/user"
 	"fiber-bbs/routes"
 	"time"
@@ -32,7 +33,23 @@ func SetupDB() {
 	migration(db)
 }
 func migration(db *gorm.DB) {
-
+	//var categories = []category.Category{{
+	//	Name:        "分享",
+	//	Description: "分享创造，分享发现",
+	//},
+	//	{
+	//		Name:        "教程",
+	//		Description: "开发技巧、推荐扩展包等",
+	//	},
+	//	{
+	//		Name:        "问答",
+	//		Description: "请保持友善，互帮互助",
+	//	},
+	//	{
+	//		Name:        "公告",
+	//		Description: "站点公告",
+	//	}}
+	//db.Model(&category.Category{}).Create(&categories)
 	// 自动迁移
-	db.AutoMigrate(&user.User{})
+	db.AutoMigrate(&user.User{}, &category.Category{})
 }
