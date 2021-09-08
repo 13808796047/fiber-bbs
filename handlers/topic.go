@@ -15,11 +15,11 @@ type TopicHandler struct {
 func (t *TopicHandler) Index(c *fiber.Ctx) error {
 	data := map[string]interface{}{
 		"page":     c.Query("page", "1"),
-		"per_page": c.Query("per_page", "10"),
+		"per_page": c.Query("per_page", "5"),
 	}
 	topics, count, _ := topic.GetList(data)
 
-	p := paginator.Paginator(cast.ToInt(c.Query("page", "1")), 10, cast.ToInt(count), 2)
+	p := paginator.Paginator(cast.ToInt(c.Query("page", "1")), 5, cast.ToInt(count), 2)
 	res := ""
 	for _, page := range p {
 		var class string

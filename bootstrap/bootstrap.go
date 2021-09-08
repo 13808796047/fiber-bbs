@@ -69,4 +69,16 @@ func migration(db *gorm.DB) {
 	//}
 	//db.Model(&topic.Topic{}).Create(&data)
 	db.AutoMigrate(&user.User{}, &category.Category{}, &topic.Topic{})
+	//avatars := []string{
+	//	"https://cdn.learnku.com/uploads/images/201710/14/1/s5ehp11z6s.png",
+	//	"https://cdn.learnku.com/uploads/images/201710/14/1/Lhd1SHqu86.png",
+	//	"https://cdn.learnku.com/uploads/images/201710/14/1/LOnMrqbHJn.png",
+	//	"https://cdn.learnku.com/uploads/images/201710/14/1/xAuDMxteQy.png",
+	//	"https://cdn.learnku.com/uploads/images/201710/14/1/ZqM7iaP4CR.png",
+	//	"https://cdn.learnku.com/uploads/images/201710/14/1/NDnzMutoxX.png",
+	//}
+	//
+	//for i := 1; i < 12; i++ {
+	//	db.Model(&user.User{}).Where("id=?", i).Update("avatar", avatars[rand.Intn(5)])
+	//}
 }
