@@ -4,6 +4,7 @@ import (
 	"fiber-bbs/config"
 	"fiber-bbs/database"
 	"fiber-bbs/models/category"
+	"fiber-bbs/models/topic"
 	"fiber-bbs/models/user"
 	"fiber-bbs/routes"
 	"time"
@@ -51,5 +52,21 @@ func migration(db *gorm.DB) {
 	//	}}
 	//db.Model(&category.Category{}).Create(&categories)
 	// 自动迁移
-	db.AutoMigrate(&user.User{}, &category.Category{})
+	//faker.SetRandomNumberBoundaries(1, 4)
+	//user_id := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	//cate_id := []int{1, 2, 3, 4}
+	//var data []topic.Topic
+	//for i := 0; i < 100; i++ {
+	//	user := topic.Topic{
+	//		Title:      faker.Sentence(),
+	//		Body:       faker.Paragraph(),
+	//		Except:     faker.Sentence(),
+	//		UserId:     cast.ToUint64(user_id[rand.Intn(9)]),
+	//		CategoryId: cast.ToUint64(cate_id[rand.Intn(3)]),
+	//	}
+	//	data = append(data, user)
+	//
+	//}
+	//db.Model(&topic.Topic{}).Create(&data)
+	db.AutoMigrate(&user.User{}, &category.Category{}, &topic.Topic{})
 }

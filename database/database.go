@@ -6,22 +6,24 @@ import (
 	"github.com/spf13/cast"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
 	gormlogger "gorm.io/gorm/logger"
 )
 
 var DB *gorm.DB
+
 func ConnectionDB() *gorm.DB {
 	var err error
 	// 初始化MySQL连接信息
 	var (
-		host = config.Config("DB_HOST")
-		port = config.Config("DB_PORT")
+		host     = config.Config("DB_HOST")
+		port     = config.Config("DB_PORT")
 		database = config.Config("DB_DATABASE")
 		username = config.Config("DB_USERNAME")
 		password = config.Config("DB_PASSWORD")
 	)
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=%t&loc=%s",
-		username, password, host, port, database,"utf8mb4", true, "Local")
+		username, password, host, port, database, "utf8mb4", true, "Local")
 	gormConfig := mysql.New(mysql.Config{
 		DSN: dsn,
 	})
@@ -39,7 +41,7 @@ func ConnectionDB() *gorm.DB {
 		Logger: gormlogger.Default.LogMode(level),
 	})
 	if err != nil {
-		fmt.Println("数据库连接错误:",err)
+		fmt.Println("数据库连接错误:", err)
 	}
 	return DB
 }
