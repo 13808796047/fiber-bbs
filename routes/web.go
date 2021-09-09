@@ -42,4 +42,6 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Post("/logout", login.Logout)
 	topic := &handlers.TopicHandler{}
 	app.Get("/topics", topic.Index)
+	category := &handlers.CategoryHandler{}
+	app.Get("categories/show/:id", category.Show)
 }

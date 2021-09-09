@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"fiber-bbs/models/topic"
-	"fmt"
+	"fiber-bbs/pkgs/pagination"
 	"github.com/gofiber/fiber/v2"
-	"github.com/slava-vishnyakov/paginator"
+
 	"github.com/spf13/cast"
 	"html/template"
 )
@@ -13,31 +13,11 @@ type TopicHandler struct {
 }
 
 func (t *TopicHandler) Index(c *fiber.Ctx) error {
-	data := map[string]interface{}{
-		"page":     c.Query("page", "1"),
-		"per_page": c.Query("per_page", "5"),
-	}
-	topics, count, _ := topic.GetList(data)
-
-	p := paginator.Paginator(cast.ToInt(c.Query("page", "1")), 5, cast.ToInt(count), 2)
-	res := ""
-	for _, page := range p {
-		var class string
-		var disable string
-		if page.IsActive {
-			class = "active"
-		} else {
-			class = ""
-		}
-		if page.IsDisabled {
-			disable = "disabled"
-		} else {
-			disable = ""
-		}
-
-		res += fmt.Sprintf(`<li class="page-item %s %s"><a class="page-link" href="?page=%v">%s</a></li>`, class, disable, page.Page, page.Label)
-	}
-
+	page := cast.ToInt(c.Query("page", "1"))
+	per_page := cast.ToInt(c.Query("per_page", "5"))
+	maps := make(map[string]interface{})
+	topics, count, _ := topic.GetList(page, per_page, maps)
+	res := pagination.Pagination(page, cast.ToInt(count), per_page)
 	return c.Render("topics/index", &fiber.Map{
 		"Topics":     topics,
 		"page_class": "topics-index-page",
