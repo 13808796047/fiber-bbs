@@ -6,15 +6,16 @@ import (
 	"github.com/gofiber/template/html"
 )
 
-
 func main() {
 	engine := html.New("./views", ".html")
+	// Creating a template with function hasPermission
 
 	app := fiber.New(fiber.Config{
-		Views: engine,
+		Views:       engine,
 		ViewsLayout: "layouts/app",
 	})
-	app.Static("/static","static")
+
+	app.Static("/static", "static")
 	bootstrap.SetupRoute(app)
 	bootstrap.SetupDB()
 	app.Listen(":3000")
