@@ -4,11 +4,15 @@ import (
 	"fiber-bbs/bootstrap"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
+	"strings"
 )
 
 func main() {
 	engine := html.New("./views", ".html")
 	// Creating a template with function hasPermission
+	engine.AddFunc("active_class", func(path, current_path string) bool {
+		return strings.Contains(path, current_path)
+	})
 
 	app := fiber.New(fiber.Config{
 		Views:       engine,

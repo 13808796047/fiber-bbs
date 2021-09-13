@@ -33,17 +33,13 @@ func (cate *CategoryHandler) Show(c *fiber.Ctx) error {
 	}
 
 	res := pagination.Pagination(page, cast.ToInt(count), per_page)
-	//tmpl, _ := template.New("").
-	//	Funcs(template.FuncMap{
-	//		"CategoryNavActive": helpers.CategoryNavActive,
-	//	}).ParseFiles("layouts/_header.html")
-	//tmpl.Execute(c.Response().BodyWriter(), "")c
 
 	return c.Render("topics/index", &fiber.Map{
-		"Topics":     &topics,
-		"page_class": "topics-index-page",
-		"Page":       template.HTML(res),
-		"Title":      result.Name,
-		"Category":   result,
+		"Topics":       &topics,
+		"page_class":   "topics-index-page",
+		"Page":         template.HTML(res),
+		"Title":        result.Name,
+		"Category":     result,
+		"current_path": c.OriginalURL(),
 	})
 }

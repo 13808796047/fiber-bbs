@@ -10,8 +10,9 @@
 
       <div class="card-header bg-transparent">
         <ul class="nav nav-pills">
-          <li class="nav-item"><a class="nav-link active" href="?order=default">最后回复</a></li>
-          <li class="nav-item"><a class="nav-link" href="?order=recent">最新发布</a></li>
+          <li class="nav-item"><a class="nav-link
+          {{with active_class .current_path "?order=default" }}active{{end}}" href="?order=default">最后回复</a></li>
+          <li class="nav-item"><a class="nav-link {{with active_class .current_path "?order=recent" }}active{{end}}"  href="?order=recent">最新发布</a></li>
         </ul>
       </div>
 
@@ -22,6 +23,7 @@
         <div class="mt-5" >
           <nav aria-label="Page navigation example">
             <ul class="pagination">
+
             {{.Page}}
 
             </ul>
