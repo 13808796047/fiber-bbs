@@ -13,3 +13,11 @@ func Get(id int) (*Category, error) {
 	}
 	return &category, nil
 }
+func List() ([]*Category, error) {
+	category := []*Category{}
+	err := database.DB.Model(&Category{}).Find(&category).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
+	return category, nil
+}

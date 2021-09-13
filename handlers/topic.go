@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fiber-bbs/models/category"
 	"fiber-bbs/models/topic"
 	"fiber-bbs/pkgs/pagination"
 	"github.com/gofiber/fiber/v2"
@@ -24,5 +25,12 @@ func (t *TopicHandler) Index(c *fiber.Ctx) error {
 		"Page":         template.HTML(res),
 		"Title":        "话题列表",
 		"current_path": c.OriginalURL(),
+	})
+}
+
+func (t TopicHandler) Create(c *fiber.Ctx) error {
+	categories, _ := category.List()
+	return c.Render("topics/create_and_edit", fiber.Map{
+		"Categories": categories,
 	})
 }
