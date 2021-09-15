@@ -1,14 +1,17 @@
 package handlers
 
 import (
+	"fiber-bbs/database"
 	"fiber-bbs/models/category"
 	"fiber-bbs/models/topic"
+	"fiber-bbs/models/user"
 	"fiber-bbs/pkgs/auth"
 	"fiber-bbs/pkgs/pagination"
 	"fiber-bbs/pkgs/upload"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cast"
 	"html/template"
+	"log"
 )
 
 type TopicHandler struct {
@@ -30,7 +33,18 @@ func (t *TopicHandler) Index(c *fiber.Ctx) error {
 		"User":         auth.User(c),
 	})
 }
-
+func (t *TopicHandler) Show(c *fiber.Ctx) error {
+	id := c.Params("id", "0")
+	topic, err := topic.Get(id)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return c.Render("topics/show", &fiber.Map{
+		"topic":        &topic,
+		"page_class":   "topics-show-page",
+		"current_path": c.OriginalURL(),
+	})
+}
 func (t *TopicHandler) Create(c *fiber.Ctx) error {
 	categories, _ := category.List()
 	return c.Render("topics/create_and_edit", &fiber.Map{
@@ -39,7 +53,21 @@ func (t *TopicHandler) Create(c *fiber.Ctx) error {
 	})
 }
 func (t *TopicHandler) Store(c *fiber.Ctx) error {
-	return c.Redirect("/topics/show")
+	category, err := category.Get(cast.ToInt(c.FormValue("category_id")))
+	if err != nil {
+		log.Fatal(err)
+	}
+	u, _ := user.Get("1")
+	topic := topic.Topic{
+		Category: category,
+		User:     &u,
+	}
+	if err := c.BodyParser(&topic); err != nil {
+		log.Fatal(err)
+	}
+
+	database.DB.Create(&topic)
+	return c.Redirect("/topics/show/"+cast.ToString(topic.ID), 302)
 }
 func (t *TopicHandler) UploadImage(c *fiber.Ctx) error {
 	h, err := c.FormFile("upload_file")

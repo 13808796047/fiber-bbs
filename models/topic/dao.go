@@ -3,6 +3,7 @@ package topic
 import (
 	"fiber-bbs/database"
 	"gorm.io/gorm/clause"
+	"log"
 )
 
 func GetList(page, pageSize int, maps interface{}, order string) (topics []Topic, count int64, err error) {
@@ -17,4 +18,11 @@ func GetList(page, pageSize int, maps interface{}, order string) (topics []Topic
 	query.Offset((page - 1) * pageSize).Limit(pageSize).Find(&topics)
 	database.DB.Model(&Topic{}).Where(maps).Count(&count)
 	return topics, count, nil
+}
+func Get(id string) (topic *Topic, err error) {
+	if err := database.DB.Preload(clause.Associations).First(&topic, id).Error; err != nil {
+		log.Fatal(err)
+	}
+
+	return
 }
