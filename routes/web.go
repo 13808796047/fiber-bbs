@@ -67,6 +67,8 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Get("/", topic.Index)
 	app.Get("/topics", topic.Index)
 	app.Get("/topics/create", topic.Create)
+	app.Post("/topics", topic.Store)
+	app.Post("topics/upload_image", topic.UploadImage)
 	category := &handlers.CategoryHandler{}
 	app.Get("/categories/show/:id", category.Show)
 }

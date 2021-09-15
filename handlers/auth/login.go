@@ -13,7 +13,8 @@ type LoginHandler struct {
 func (l *LoginHandler) ShowLoginForm(c *fiber.Ctx) error {
 
 	return c.Render("auth/login", fiber.Map{
-		"Title": "登录",
+		"Title":        "登录",
+		"current_path": c.OriginalURL(),
 	})
 }
 func (l *LoginHandler) Login(c *fiber.Ctx) error {
@@ -23,10 +24,11 @@ func (l *LoginHandler) Login(c *fiber.Ctx) error {
 		return c.Redirect("/")
 	}
 	return c.Render("auth/login", fiber.Map{
-		"Title":    "登录",
-		"Errors":   errors.New("账号或密码错误"),
-		"Email":    email,
-		"Password": password,
+		"Title":        "登录",
+		"Errors":       errors.New("账号或密码错误"),
+		"Email":        email,
+		"Password":     password,
+		"current_path": c.OriginalURL(),
 	})
 }
 func (l *LoginHandler) Logout(c *fiber.Ctx) error {
