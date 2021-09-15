@@ -10,12 +10,17 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      {{$topics := "/topics"}}
+      {{$category_1:="/categories/show/1"}}
+      {{$category_2:="/categories/show/2"}}
+      {{$category_3:="/categories/show/3"}}
+      {{$category_4:="/categories/show/4"}}
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item {{with active_class .current_path "/topics" }}active{{end}}"><a class="nav-link" href="/topics">话题</a></li>
-        <li class="nav-item {{with active_class .current_path "/categories/show/1" }}active{{end}} "><a class="nav-link " href="/categories/show/1">分享</a></li>
-        <li class="nav-item {{with active_class .current_path "/categories/show/2" }}active{{end}}"><a class="nav-link" href="/categories/show/2">教程</a></li>
-        <li class="nav-item {{with active_class .current_path "/categories/show/3" }}active{{end}}"><a class="nav-link" href="/categories/show/3">问答</a></li>
-        <li class="nav-item {{with active_class .current_path "/categories/show/4" }}active{{end}}"><a class="nav-link" href="/categories/show/4">公告</a></li>
+        <li class="nav-item {{if urlContain .current_path $topics}}active{{end}}"><a class="nav-link" href="{{$topics}}">话题</a></li>
+        <li class="nav-item {{if urlContain .current_path $category_1}}active{{end}} "><a class="nav-link " href="{{$category_1}}">分享</a></li>
+        <li class="nav-item {{if urlContain .current_path $category_2}}active{{end}}"><a class="nav-link" href="{{$category_2}}">教程</a></li>
+        <li class="nav-item {{if urlContain .current_path $category_3}}active{{end}}"><a class="nav-link" href="{{$category_3}}">问答</a></li>
+        <li class="nav-item {{if urlContain .current_path $category_4}}active{{end}}"><a class="nav-link" href="{{$category_4}}">公告</a></li>
       </ul>
       <ul class="navbar-nav justify-content-end">
 

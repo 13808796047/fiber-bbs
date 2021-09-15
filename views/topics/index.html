@@ -7,12 +7,12 @@
     </div>
     {{end}}
     <div class="card ">
-
+      {{$default:="?order=default"}}
+      {{$recent:="?order=recent"}}
       <div class="card-header bg-transparent">
         <ul class="nav nav-pills">
-          <li class="nav-item"><a class="nav-link
-          {{with active_class .current_path "?order=default" }}active{{end}}" href="?order=default">最后回复</a></li>
-          <li class="nav-item"><a class="nav-link {{with active_class .current_path "?order=recent" }}active{{end}}"  href="?order=recent">最新发布</a></li>
+          <li class="nav-item"><a class="nav-link {{if urlContain .current_path  $default}}active{{end}}" href="{{$default}}">最后回复</a></li>
+          <li class="nav-item"><a class="nav-link {{if urlContain .current_path $recent }}active{{end}}"  href="{{$recent}}">最新发布</a></li>
         </ul>
       </div>
 

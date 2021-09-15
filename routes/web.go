@@ -5,7 +5,6 @@ import (
 	"fiber-bbs/handlers/auth"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cache"
 	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
 	"github.com/steambap/captcha"
 	"image/color"
@@ -31,17 +30,17 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Use(encryptcookie.New(encryptcookie.Config{
 		Key: encryptcookie.GenerateKey(),
 	}))
-	app.Use(Timer())
-	app.Use(cache.New(cache.Config{
-		Next: func(c *fiber.Ctx) bool {
-			return c.Query("refresh") == "true"
-		},
-		Expiration:   30 * time.Minute,
-		CacheControl: true,
-	}))
-	home := &handlers.HomeHandler{}
-	app.Get("/", home.Index)
-	app.Use(Timer())
+	//app.Use(Timer())
+	//app.Use(cache.New(cache.Config{
+	//	Next: func(c *fiber.Ctx) bool {
+	//		return c.Query("refresh") == "true"
+	//	},
+	//	Expiration:   30 * time.Minute,
+	//	CacheControl: true,
+	//}))
+	//home := &handlers.HomeHandler{}
+	//app.Get("/", home.Index)
+	//app.Use(Timer())
 	app.Get("/captcha", func(c *fiber.Ctx) error {
 
 		data, _ := captcha.New(100, 30, func(options *captcha.Options) {
@@ -65,9 +64,9 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Post("/login", login.Login)
 	app.Post("/logout", login.Logout)
 	topic := &handlers.TopicHandler{}
-	//app.Get("/", topic.Index)
+	app.Get("/", topic.Index)
 	app.Get("/topics", topic.Index)
 	app.Get("/topics/create", topic.Create)
 	category := &handlers.CategoryHandler{}
-	app.Get("categories/show/:id", category.Show)
+	app.Get("/categories/show/:id", category.Show)
 }

@@ -28,9 +28,10 @@ func (t *TopicHandler) Index(c *fiber.Ctx) error {
 	})
 }
 
-func (t TopicHandler) Create(c *fiber.Ctx) error {
+func (t *TopicHandler) Create(c *fiber.Ctx) error {
 	categories, _ := category.List()
-	return c.Render("topics/create_and_edit", fiber.Map{
-		"Categories": categories,
+	return c.Render("topics/create_and_edit", &fiber.Map{
+		"Categories":   &categories,
+		"current_path": c.OriginalURL(),
 	})
 }

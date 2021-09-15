@@ -1,10 +1,11 @@
-@import url('https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css');
+@import url("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css");
 /* universal */
 
 body {
   font-family: Helvetica, "Microsoft YaHei", Arial, sans-serif;
   font-size: 14px;
 }
+
 /* header */
 
 .navbar-static-top {
@@ -51,7 +52,7 @@ body {
 }
 /* User register page */
 .register-page {
-  img.captcha {
+  img.captcha-img {
     cursor: pointer;
     border: 1px solid #ced4da;
     border-radius: 4px;
@@ -59,7 +60,7 @@ body {
   }
 }
 /* Topic Index Page */
-.topics-index-page {
+.topics-index-page,.categories-show-page {
   .topic-list {
     .nav>li>a {
       position: relative;
@@ -92,4 +93,23 @@ body {
       border-top: 1px solid #dcebf5;
     }
   }
+}
+.simditor-body img {
+  max-width:100%;
+}
+/* Topic Show Page */
+
+@import "topic_body";
+
+.topics-show-page {
+
+    .card {
+        padding: 15px;
+
+        h1 {
+            margin: 0.4em auto 0.6em;
+            font-size: 28px;
+            line-height: 38px;
+        }
+    }
 }

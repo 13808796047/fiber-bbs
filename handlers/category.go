@@ -14,13 +14,11 @@ type CategoryHandler struct {
 }
 
 func (cate *CategoryHandler) Show(c *fiber.Ctx) error {
-
-	category_id, _ := c.ParamsInt("id")
-
+	category_id := c.Params("id")
 	page := cast.ToInt(c.Query("page", "1"))
 	per_page := cast.ToInt(c.Query("per_page", "5"))
 	order := c.Query("order")
-	result, err := category.Get(category_id)
+	result, err := category.Get(cast.ToInt(category_id))
 	if err != nil {
 		log.Println(err)
 	}
