@@ -27,6 +27,9 @@ func Timer() fiber.Handler {
 	}
 }
 func RegisterWebRoutes(app *fiber.App) {
+	//app.Use(compress.New())
+	//app.Use(logger.New())
+	//app.Use(cache.New())
 	app.Use(encryptcookie.New(encryptcookie.Config{
 		Key: encryptcookie.GenerateKey(),
 	}))

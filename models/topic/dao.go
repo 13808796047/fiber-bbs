@@ -26,3 +26,16 @@ func Get(id string) (topic *Topic, err error) {
 
 	return
 }
+func Delete(id string) error {
+	var err error
+	if err = database.DB.Where("id=?", id).Delete(&Topic{}).Error; err == nil {
+		return nil
+	}
+	return err
+}
+func Update(maps interface{}, topic *Topic) (err error) {
+	if err = database.DB.Where(maps).Save(&topic).Error; err == nil {
+		return nil
+	}
+	return
+}
