@@ -3,6 +3,7 @@ package routes
 import (
 	"fiber-bbs/handlers"
 	"fiber-bbs/handlers/auth"
+	"fiber-bbs/middlewares"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
@@ -41,8 +42,8 @@ func RegisterWebRoutes(app *fiber.App) {
 	//	Expiration:   30 * time.Minute,
 	//	CacheControl: true,
 	//}))
-	//home := &handlers.HomeHandler{}
-	//app.Get("/", home.Index)
+	home := &handlers.HomeHandler{}
+	app.Get("/", home.Index)
 	//app.Use(Timer())
 	app.Get("/captcha", func(c *fiber.Ctx) error {
 
@@ -66,14 +67,20 @@ func RegisterWebRoutes(app *fiber.App) {
 	app.Get("/login", login.ShowLoginForm)
 	app.Post("/login", login.Login)
 	app.Post("/logout", login.Logout)
-	topic := &handlers.TopicHandler{}
-	app.Get("/", topic.Index)
-	app.Get("/topics", topic.Index)
-	app.Get("/topics/show/:id", topic.Show)
-	app.Get("/topics/create", topic.Create)
-	app.Post("/topics", topic.Store)
 
-	app.Post("topics/upload_image", topic.UploadImage)
-	category := &handlers.CategoryHandler{}
-	app.Get("/categories/show/:id", category.Show)
+	topics := app.Group("/topics", middlewares.CheckAuth())
+	{
+		topic := &handlers.TopicHandler{}
+		topics.Get("/", topic.Index)
+		topics.Get("/show/:id", topic.Show)
+		topics.Get("/create", topic.Create)
+		topics.Post("/", topic.Store)
+		topics.Post("/upload_image", topic.UploadImage)
+	}
+
+	categories := app.Group("/categories", middlewares.CheckAuth())
+	{
+		category := &handlers.CategoryHandler{}
+		categories.Get("/show/:id", category.Show)
+	}
 }
